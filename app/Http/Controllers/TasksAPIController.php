@@ -38,7 +38,7 @@ class TasksAPIController extends AppBaseController
     {
         $mytime = Carbon::now();
         $mytime= $mytime->today();
-        $tasks = DB::table('tasks')->where('date', '=', $mytime)->get();
+        $tasks = DB::table('tasks')->where('date', '=', $mytime)->orderBy('date')->get();
         
 
         return $this->sendResponse($tasks->toArray(), 'Tasks retrieved successfully');
