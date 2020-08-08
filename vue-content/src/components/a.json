@@ -1,0 +1,29 @@
+[{
+   "text": "created_at",
+   "value": "created_at"
+  },
+  {
+    "text": "date",
+    "value": "date"
+   },
+   {
+    "text": "deleted_at",
+    "value": "deleted_at"
+   },
+   {
+    "text": "description",
+    "value": "description"
+   },
+   {
+    "text": "id",
+    "value": "id"
+   },
+   {
+    "text": "location",
+    "value": "location"
+   },
+   {
+    "text": "updated_at",
+    "value": "updated_at"
+   }
+]
