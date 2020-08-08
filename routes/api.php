@@ -23,3 +23,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::resource('tasks', 'TasksAPIController');
+
+Route::resource('weather', 'WeatherAPIController');

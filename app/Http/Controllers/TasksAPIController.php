@@ -123,13 +123,9 @@ class TasksAPIController extends AppBaseController
     public function destroy($id)
     {
         /** @var Tasks $tasks */
-        $tasks = $this->tasksRepository->find($id);
+        $tasks = DB::table('tasks')->where('id','=',$id)->delete();
 
-        if (empty($tasks)) {
-            return $this->sendError('Tasks not found');
-        }
-
-        $tasks->delete();
+        
 
         return $this->sendSuccess('Tasks deleted successfully');
     }

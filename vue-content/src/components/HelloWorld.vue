@@ -231,8 +231,21 @@
       },
 
       deleteItem (item) {
-        const index = this.tasks.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.tasks.splice(index, 1)
+        
+        
+        confirm('Are you sure you want to delete this item?') &&  axios
+            .delete('http://localhost:8000/api/tasks/'+ item.id)
+            .then(response => {
+              this.getTask()
+              console.log(response);
+              
+              
+              
+              
+              
+            
+            
+    })
       },
   getTask() {
     setTimeout(() => {
@@ -240,8 +253,9 @@
             .get('http://localhost:8000/api/tasks')
             .then(response => {this.tasks = response.data.data
             
-    })
-    }, 1000);
+    });
+    
+    }, 500);
    
     }  
     },
