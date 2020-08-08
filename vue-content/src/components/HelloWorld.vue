@@ -68,12 +68,69 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-data-table
-      :headers="headers"
-      :items="tasks"
-      :items-per-page="5"
-      class="elevation-1"
-    ></v-data-table>
+     <v-data-table
+    :headers="headers"
+    :items="tasks"
+    sort-by="description"
+    class="elevation-1"
+  >
+    <template v-slot:top>
+      <v-toolbar flat color="white">
+        <v-toolbar-title>My CRUD</v-toolbar-title>
+        <v-divider
+          class="mx-4"
+          inset
+          vertical
+        ></v-divider>
+        <v-spacer></v-spacer>
+        <v-dialog v-model="dialog1" max-width="500px">
+         
+          <v-card>
+            <v-card-title>
+              <span class="headline">{{ formTitle }}</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="task.description" label="Dessert name"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="task.date" label="Calories"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="task.location" label="Fat (g)"></v-text-field>
+                  </v-col>
+                 
+                </v-row>
+              </v-container>
+            </v-card-text>
+
+           
+          </v-card>
+        </v-dialog>
+      </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon
+        small
+        class="mr-2"
+        @click="editItem(item)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        small
+        @click="deleteItem(item)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+    <template v-slot:no-data>
+      <v-btn color="primary" @click="initialize">Reset</v-btn>
+    </template>
+  </v-data-table>
   </section>
 
 </template>
@@ -95,6 +152,7 @@
     data () {
       return {
         menu1: false,
+        dialog1: false,
         dialog: false,
         info: null,
         task: {},
@@ -128,6 +186,12 @@
     "text": "updated_at",
     "value": "updated_at"
    }
+   ,
+   {
+    "text": "update",
+    "value": "update"
+   },
+   { text: 'Actions', value: 'actions', sortable: false },
           
         ]
       }
@@ -143,6 +207,18 @@
         
         
     },
+      editItem (item) {
+        console.log(item);
+        
+        this.editedIndex = this.tasks.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialog1 = true
+      },
+
+      deleteItem (item) {
+        const index = this.tasks.indexOf(item)
+        confirm('Are you sure you want to delete this item?') && this.tasks.splice(index, 1)
+      },
   getTask() {
     setTimeout(() => {
          axios
