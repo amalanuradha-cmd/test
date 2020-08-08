@@ -94,16 +94,19 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="task.description" label="Description"></v-text-field>
+                    <v-text-field v-model="task.description"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="task.date" label="Date"></v-text-field>
+                    <v-text-field v-model="task.date" ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="task.location" label="Location"></v-text-field>
+                    <v-text-field v-model="task.location" ></v-text-field>
                   </v-col>
-                 
+                 <v-col cols="12" sm="6" md="4">
+                    <v-btn @click="update()" label="Location">Save</v-btn>
+                  </v-col>
                 </v-row>
+                
               </v-container>
             </v-card-text>
 
@@ -157,6 +160,7 @@
         info: null,
         task: {},
         tasks: [],
+        currentTask: {},
         headers: [
           {
    "text": "created_at",
@@ -197,6 +201,17 @@
       }
     },
     methods: {
+      update() {
+         axios.put('http://localhost:8000/api/tasks/'+this.task.id, this.task).then(
+        (response)=>{
+          console.log(response);
+          
+          this.getTask()
+        this.dialog1 = false
+        }
+     );
+        
+      },
       addTask() {
         console.log(this.task);
         
@@ -211,7 +226,7 @@
         console.log(item);
         
         this.editedIndex = this.tasks.indexOf(item)
-        this.editedItem = Object.assign({}, item)
+        this.task = Object.assign({}, item)
         this.dialog1 = true
       },
 
