@@ -94,13 +94,13 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="task.description" label="Dessert name"></v-text-field>
+                    <v-text-field v-model="task.description" label="Description"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="task.date" label="Calories"></v-text-field>
+                    <v-text-field v-model="task.date" label="Date"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="task.location" label="Fat (g)"></v-text-field>
+                    <v-text-field v-model="task.location" label="Location"></v-text-field>
                   </v-col>
                  
                 </v-row>
