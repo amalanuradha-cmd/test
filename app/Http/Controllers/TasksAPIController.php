@@ -45,19 +45,7 @@ class TasksAPIController extends AppBaseController
     }
 
 
-    public function createTask(Request $request)
-    {
-        
-        $post = new Tasks;
-        $post->description = $request->description;
-        $post->location = $request->location;
-        $post->date = $request->date;
-        $post->save();
-
-        return response()->json([
-            'message' => 'New post created'
-        ]);
-    }
+ 
 
 
     /**
@@ -70,7 +58,7 @@ class TasksAPIController extends AppBaseController
      */
     public function store(CreateTasksAPIRequest $request)
     {
-        return $input = $request->all();
+        $input = $request->all();
 
         $tasks = $this->tasksRepository->create($input);
 

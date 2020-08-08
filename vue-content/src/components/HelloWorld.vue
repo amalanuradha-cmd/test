@@ -200,7 +200,7 @@
       addTask() {
         console.log(this.task);
         
-      axios.post('http://localhost:8000/api/tasks/add', this.task).then(
+      axios.post('http://localhost:8000/api/tasks', this.task).then(
         this.getTask()
      );
         
