@@ -97,7 +97,29 @@
                     <v-text-field v-model="task.description"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="task.date" ></v-text-field>
+                    <v-menu
+          ref="menu2"
+          v-model="menu2"
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
+          max-width="290px"
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="task.date"
+              label="Date"
+              hint="MM/DD/YYYY format"
+              persistent-hint
+              
+              v-bind="attrs"
+              @blur="date = parseDate(task.date)"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="task.date" no-title @input="menu1 = false"></v-date-picker>
+        </v-menu>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="task.location" ></v-text-field>
@@ -154,6 +176,7 @@
     },
     data () {
       return {
+        menu2: false,
         menu1: false,
         dialog1: false,
         dialog: false,
