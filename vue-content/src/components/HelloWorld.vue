@@ -87,7 +87,7 @@
          
           <v-card>
             <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
+              <span class="headline"></span>
             </v-card-title>
 
             <v-card-text>
@@ -135,8 +135,46 @@
            
           </v-card>
         </v-dialog>
+
+ <v-dialog v-model="dialog3" max-width="500px">
+         
+          <v-card>
+            <v-card-title>
+              <span class="headline"></span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" >
+                    <h3>{{weather.weather}}</h3>
+                  </v-col>
+                  <v-col cols="12" sm="6" >
+
+<h3>{{weather.temp}}</h3>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            
+
+           
+          </v-card>
+        </v-dialog>
+
       </v-toolbar>
     </template>
+   <template v-slot:item.weather="{ item }">
+     
+      <v-icon
+        small
+        class="mr-2"
+        @click="editWeather(item)"
+      >
+        mdi-umbrella
+      </v-icon>
+
+    </template>  
     <template v-slot:item.actions="{ item }">
       <v-icon
         small
@@ -171,11 +209,18 @@
             .then(response => {this.tasks = response.data.data
             
     })
+
+     
             
             
     },
     data () {
       return {
+        weather: {
+
+        },
+        dialog3: false,
+        menu3: false,
         menu2: false,
         menu1: false,
         dialog1: false,
@@ -210,20 +255,41 @@
     "value": "location"
    },
    {
+    "text": "weather",
+    "value": "weather"
+   },
+   {
     "text": "updated_at",
     "value": "updated_at"
    }
    ,
-   {
-    "text": "update",
-    "value": "update"
-   },
+   
    { text: 'Actions', value: 'actions', sortable: false },
           
         ]
       }
     },
     methods: {
+      editWeather(item) {
+        this.dialog3 = true
+        console.log('hello');
+        
+        console.log(item);
+        
+        axios
+            .post('http://localhost:8000/api/weather',item)
+            .then(response => {if(response.data.data[0]){this.weather = response.data.data[0];} else{
+              this.weather = {
+                temp: 'undefined',
+                weather: 'undefined'
+              }
+            }
+            console.log(this.weather);
+            
+            
+    })
+        
+      },
       update() {
          axios.put('http://localhost:8000/api/tasks/'+this.task.id, this.task).then(
         (response)=>{

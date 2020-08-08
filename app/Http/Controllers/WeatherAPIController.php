@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
 use App\Http\Requests\API\CreateWeatherAPIRequest;
 use App\Http\Requests\API\UpdateWeatherAPIRequest;
 use App\Models\Weather;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\WeatherRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -68,16 +69,18 @@ class WeatherAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         /** @var Weather $weather */
-        $weather = $this->weatherRepository->find($id);
+        
+        $location = $request->location;
+        $tasks = DB::table('weather')->where('location','=',$location)->get();
 
-        if (empty($weather)) {
+        if (empty($tasks)) {
             return $this->sendError('Weather not found');
         }
 
-        return $this->sendResponse($weather->toArray(), 'Weather retrieved successfully');
+        return $this->sendResponse($tasks->toArray(), 'Weather retrieved successfully');
     }
 
     /**
@@ -128,4 +131,6 @@ class WeatherAPIController extends AppBaseController
 
         return $this->sendSuccess('Weather deleted successfully');
     }
+
+
 }
