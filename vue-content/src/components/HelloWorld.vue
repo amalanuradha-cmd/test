@@ -301,12 +301,15 @@
      );
         
       },
-      addTask() {
+     async addTask() {
         console.log(this.task);
         
-      axios.post('http://localhost:8000/api/tasks', this.task).then(
-        this.getTask()
+     await axios.post('http://localhost:8000/api/tasks', this.task).then(
+        
      );
+     this.getTask()
+
+     
         
         
         
@@ -337,14 +340,14 @@
     })
       },
   getTask() {
-    setTimeout(() => {
+    
          axios
             .get('http://localhost:8000/api/tasks')
             .then(response => {this.tasks = response.data.data
             
     });
     
-    }, 500);
+    
    
     }  
     },
